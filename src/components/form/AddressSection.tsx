@@ -14,9 +14,9 @@ interface Props {
 const AddressSection: React.FC<Props> = ({ data, errors, onChange }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.sectionTitle}>Address</Text>
+      <Text style={styles.sectionTitle}>🏠 Address</Text>
       <Text style={styles.subtitle}>
-        Provide the learner’s barangay and complete address.
+        Provide the learner's barangay and complete home address.
       </Text>
 
       {/* Barangay */}
@@ -59,27 +59,29 @@ const styles = StyleSheet.create({
     padding: 4,
   },
   sectionTitle: {
-    fontSize: 20,
-    fontWeight: '700',
+    fontSize: 22,
+    fontWeight: '800',
     color: COLORS.primary,
     marginBottom: 4,
   },
   subtitle: {
-    fontSize: 13,
+    fontSize: 14,
     color: COLORS.textSecondary,
-    marginBottom: 16,
+    marginBottom: 20,
+    lineHeight: 20,
   },
   label: {
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: '600',
     color: COLORS.text,
-    marginBottom: 4,
-    marginTop: 8,
+    marginBottom: 6,
+    marginTop: 12,
   },
   input: {
-    marginBottom: 8,
+    marginBottom: 10,
     backgroundColor: COLORS.white,
     minHeight: 100,
+    fontSize: 16,
   },
 });
 

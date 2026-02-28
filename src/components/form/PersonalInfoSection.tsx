@@ -41,8 +41,10 @@ const PersonalInfoSection: React.FC<Props> = ({ data, errors, onChange }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.sectionTitle}>Personal Information</Text>
-      <Text style={styles.subtitle}>Fields marked with * are required</Text>
+      <Text style={styles.sectionTitle}>👤 Personal Information</Text>
+      <Text style={styles.subtitle}>
+        Fields marked with <Text style={{ fontWeight: '700', color: COLORS.error }}>*</Text> are required. Tap each field to fill in.
+      </Text>
 
       {/* Mapped By */}
       <TextInput
@@ -211,35 +213,41 @@ const styles = StyleSheet.create({
     padding: 4,
   },
   sectionTitle: {
-    fontSize: 20,
-    fontWeight: '700',
+    fontSize: 22,
+    fontWeight: '800',
     color: COLORS.primary,
     marginBottom: 4,
   },
   subtitle: {
-    fontSize: 13,
+    fontSize: 14,
     color: COLORS.textSecondary,
-    marginBottom: 16,
+    marginBottom: 20,
+    lineHeight: 20,
   },
   input: {
-    marginBottom: 8,
+    marginBottom: 10,
     backgroundColor: COLORS.white,
+    fontSize: 16,
   },
   label: {
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: '600',
     color: COLORS.text,
-    marginTop: 8,
-    marginBottom: 4,
+    marginBottom: 6,
+    marginTop: 12,
   },
   radioRow: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 4,
   },
   radioItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginRight: 24,
+    marginRight: 20,
+    paddingVertical: 6,
+    paddingHorizontal: 4,
+    borderRadius: 8,
   },
   radioItemInner: {
     flexDirection: 'row',

@@ -13,9 +13,9 @@ interface Props {
 const FamilySection: React.FC<Props> = ({ data, errors: _errors, onChange }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.sectionTitle}>Family Information</Text>
+      <Text style={styles.sectionTitle}>👨‍👩‍👧 Family Information</Text>
       <Text style={styles.subtitle}>
-        All fields in this section are optional.
+        All fields in this section are optional. Fill in what you can.
       </Text>
 
       <TextInput
@@ -69,19 +69,21 @@ const styles = StyleSheet.create({
     padding: 4,
   },
   sectionTitle: {
-    fontSize: 20,
-    fontWeight: '700',
+    fontSize: 22,
+    fontWeight: '800',
     color: COLORS.primary,
     marginBottom: 4,
   },
   subtitle: {
-    fontSize: 13,
+    fontSize: 14,
     color: COLORS.textSecondary,
-    marginBottom: 16,
+    marginBottom: 20,
+    lineHeight: 20,
   },
   input: {
-    marginBottom: 12,
+    marginBottom: 14,
     backgroundColor: COLORS.white,
+    fontSize: 16,
   },
 });
 

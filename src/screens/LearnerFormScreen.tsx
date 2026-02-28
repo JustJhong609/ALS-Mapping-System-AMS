@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { View, ScrollView, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
-import { Button, Text, Portal, Dialog, Paragraph } from 'react-native-paper';
+import React, { useState, useRef } from 'react';
+import { View, ScrollView, StyleSheet, KeyboardAvoidingView, Platform, Animated } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Button, Text, Portal, Dialog, Paragraph, IconButton } from 'react-native-paper';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RouteProp } from '@react-navigation/native';
 import { Learner, LearnerFormData, RootStackParamList, ValidationErrors } from '../types';
-import { COLORS } from '../utils/constants';
+import { COLORS, FORM_SECTIONS } from '../utils/constants';
 import { validateSection, calculateAge, generateId } from '../utils/validation';
 import { createEmptyFormData } from '../utils/helpers';
 import {
@@ -172,47 +173,83 @@ const LearnerFormScreen: React.FC<Props> = ({
     }
   };
 
+  const scrollViewRef = useRef<ScrollView>(null);
+
+  const scrollToTop = () => {
+    scrollViewRef.current?.scrollTo({ y: 0, animated: true });
+  };
+
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>
-          {isEditing ? 'Edit Learner' : 'New Learner'}
-        </Text>
-        <Text style={styles.headerSubtitle}>ALS Form 1 Data Entry</Text>
-      </View>
+    <SafeAreaView style={styles.container} edges={['top']}>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+        {/* Header */}
+        <View style={styles.header}>
+          <View style={styles.headerRow}>
+            <IconButton
+              icon="arrow-left"
+              iconColor={COLORS.white}
+              size={24}
+              onPress={() => navigation.goBack()}
+              style={styles.headerBackBtn}
+            />
+            <View style={styles.headerTextGroup}>
+              <Text style={styles.headerTitle}>
+                {isEditing ? 'Edit Learner' : 'New Learner'}
+              </Text>
+              <Text style={styles.headerSubtitle}>
+                {FORM_SECTIONS[currentStep]}
+              </Text>
+            </View>
+          </View>
+          {/* Progress bar */}
+          <View style={styles.progressBarBg}>
+            <View
+              style={[
+                styles.progressBarFill,
+                { width: `${((currentStep + 1) / FORM_SECTIONS.length) * 100}%` },
+              ]}
+            />
+          </View>
+        </View>
 
-      {/* Step Indicator */}
-      <StepIndicator currentStep={currentStep} />
+        {/* Step Indicator */}
+        <StepIndicator currentStep={currentStep} />
 
-      {/* Form Content */}
-      <ScrollView
-        style={styles.scrollView}
-        contentContainerStyle={styles.scrollContent}
-        keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={false}>
-        {renderCurrentSection()}
-      </ScrollView>
+        {/* Form Content */}
+        <ScrollView
+          ref={scrollViewRef}
+          style={styles.scrollView}
+          contentContainerStyle={styles.scrollContent}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}>
+          {renderCurrentSection()}
+        </ScrollView>
 
-      {/* Navigation Buttons */}
-      <View style={styles.buttonRow}>
-        <Button
-          mode="outlined"
-          onPress={currentStep === 0 ? () => navigation.goBack() : handlePrevious}
-          style={styles.navButton}
-          textColor={COLORS.primary}>
-          {currentStep === 0 ? 'Cancel' : 'Previous'}
-        </Button>
-        <Button
-          mode="contained"
-          onPress={handleNext}
-          style={[styles.navButton, styles.nextButton]}
-          buttonColor={currentStep === 4 ? COLORS.success : COLORS.primary}>
-          {currentStep === 4 ? 'Save' : 'Next'}
-        </Button>
-      </View>
+        {/* Navigation Buttons */}
+          <View style={styles.buttonRow}>
+          <Button
+            mode="outlined"
+            icon={currentStep === 0 ? 'close' : 'chevron-left'}
+            onPress={currentStep === 0 ? () => navigation.goBack() : () => { handlePrevious(); scrollToTop(); }}
+            style={styles.navButton}
+            contentStyle={styles.navButtonContent}
+            labelStyle={styles.navButtonLabel}
+            textColor={COLORS.primary}>
+            {currentStep === 0 ? 'Cancel' : 'Back'}
+          </Button>
+          <Button
+            mode="contained"
+            icon={currentStep === 4 ? 'check-bold' : 'chevron-right'}
+            contentStyle={[styles.navButtonContent, { flexDirection: 'row-reverse' }]}
+            labelStyle={styles.navButtonLabel}
+            onPress={() => { handleNext(); scrollToTop(); }}
+            style={[styles.navButton, styles.nextButton]}
+            buttonColor={currentStep === 4 ? COLORS.success : COLORS.primary}>
+            {currentStep === 4 ? 'Save' : 'Next'}
+          </Button>
+        </View>
 
       {/* Save Confirmation Dialog */}
       <Portal>
@@ -237,7 +274,8 @@ const LearnerFormScreen: React.FC<Props> = ({
           </Dialog.Actions>
         </Dialog>
       </Portal>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
 
@@ -248,19 +286,42 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: COLORS.primary,
-    paddingHorizontal: 20,
-    paddingTop: 16,
-    paddingBottom: 16,
+    paddingHorizontal: 12,
+    paddingTop: 4,
+    paddingBottom: 12,
+  },
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  headerBackBtn: {
+    margin: 0,
+    marginRight: 4,
+  },
+  headerTextGroup: {
+    flex: 1,
   },
   headerTitle: {
     fontSize: 20,
-    fontWeight: '700',
+    fontWeight: '800',
     color: COLORS.white,
   },
   headerSubtitle: {
     fontSize: 13,
-    color: 'rgba(255,255,255,0.8)',
-    marginTop: 2,
+    color: 'rgba(255,255,255,0.85)',
+    marginTop: 1,
+  },
+  progressBarBg: {
+    height: 4,
+    backgroundColor: 'rgba(255,255,255,0.25)',
+    borderRadius: 2,
+    marginTop: 12,
+    overflow: 'hidden',
+  },
+  progressBarFill: {
+    height: 4,
+    backgroundColor: COLORS.white,
+    borderRadius: 2,
   },
   scrollView: {
     flex: 1,
@@ -273,17 +334,27 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 16,
+    paddingBottom: Platform.OS === 'ios' ? 24 : 16,
     backgroundColor: COLORS.white,
     borderTopWidth: 1,
     borderTopColor: COLORS.border,
+    elevation: 8,
   },
   navButton: {
     flex: 1,
     marginHorizontal: 6,
-    borderRadius: 8,
+    borderRadius: 12,
+  },
+  navButtonContent: {
+    height: 50,
+  },
+  navButtonLabel: {
+    fontSize: 15,
+    fontWeight: '700',
+    letterSpacing: 0.3,
   },
   nextButton: {
-    elevation: 2,
+    elevation: 3,
   },
 });
 

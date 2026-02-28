@@ -116,15 +116,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderWidth: 1,
+    borderWidth: 1.5,
     borderColor: COLORS.border,
-    borderRadius: 4,
-    padding: 14,
+    borderRadius: 10,
+    padding: 16,
+    minHeight: 52,
     marginBottom: 8,
     backgroundColor: COLORS.white,
   },
   triggerError: {
     borderColor: COLORS.error,
+    borderWidth: 2,
   },
   selectedText: {
     fontSize: 16,
@@ -150,15 +152,15 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     backgroundColor: COLORS.white,
-    borderRadius: 12,
+    borderRadius: 16,
     padding: 16,
     width: '100%',
     maxWidth: 400,
-    maxHeight: '70%',
+    maxHeight: '80%',
   },
   modalTitle: {
-    fontSize: 18,
-    fontWeight: '700',
+    fontSize: 20,
+    fontWeight: '800',
     color: COLORS.primary,
     marginBottom: 12,
     textAlign: 'center',
@@ -175,10 +177,12 @@ const styles = StyleSheet.create({
     maxHeight: 300,
   },
   option: {
-    paddingVertical: 14,
+    paddingVertical: 16,
     paddingHorizontal: 16,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: COLORS.border,
+    minHeight: 52,
+    justifyContent: 'center',
   },
   optionSelected: {
     backgroundColor: '#E3F2FD',
@@ -198,13 +202,15 @@ const styles = StyleSheet.create({
   },
   cancelButton: {
     marginTop: 12,
-    padding: 12,
+    padding: 14,
     alignItems: 'center',
+    backgroundColor: COLORS.background,
+    borderRadius: 12,
   },
   cancelText: {
     fontSize: 16,
     color: COLORS.error,
-    fontWeight: '600',
+    fontWeight: '700',
   },
 });
 

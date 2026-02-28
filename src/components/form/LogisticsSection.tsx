@@ -18,8 +18,10 @@ interface Props {
 const LogisticsSection: React.FC<Props> = ({ data, errors, onChange }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.sectionTitle}>Logistics & Schedule</Text>
-      <Text style={styles.subtitle}>All fields are required.</Text>
+      <Text style={styles.sectionTitle}>🚌 Logistics & Schedule</Text>
+      <Text style={styles.subtitle}>
+        All fields are required. This is the last section!
+      </Text>
 
       {/* Distance in km */}
       <TextInput
@@ -90,26 +92,28 @@ const styles = StyleSheet.create({
     padding: 4,
   },
   sectionTitle: {
-    fontSize: 20,
-    fontWeight: '700',
+    fontSize: 22,
+    fontWeight: '800',
     color: COLORS.primary,
     marginBottom: 4,
   },
   subtitle: {
-    fontSize: 13,
+    fontSize: 14,
     color: COLORS.textSecondary,
-    marginBottom: 16,
+    marginBottom: 20,
+    lineHeight: 20,
   },
   input: {
-    marginBottom: 8,
+    marginBottom: 10,
     backgroundColor: COLORS.white,
+    fontSize: 16,
   },
   label: {
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: '600',
     color: COLORS.text,
-    marginTop: 8,
-    marginBottom: 4,
+    marginTop: 12,
+    marginBottom: 6,
   },
   pickerContainer: {
     borderWidth: 1,

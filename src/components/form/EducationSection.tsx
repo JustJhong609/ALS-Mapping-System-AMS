@@ -14,9 +14,9 @@ interface Props {
 const EducationSection: React.FC<Props> = ({ data, errors, onChange }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.sectionTitle}>Education Background</Text>
+      <Text style={styles.sectionTitle}>🎓 Education Background</Text>
       <Text style={styles.subtitle}>
-        Both fields are required.
+        Both fields are required. Select the most appropriate options.
       </Text>
 
       {/* Last Grade Completed */}
@@ -55,22 +55,23 @@ const styles = StyleSheet.create({
     padding: 4,
   },
   sectionTitle: {
-    fontSize: 20,
-    fontWeight: '700',
+    fontSize: 22,
+    fontWeight: '800',
     color: COLORS.primary,
     marginBottom: 4,
   },
   subtitle: {
-    fontSize: 13,
+    fontSize: 14,
     color: COLORS.textSecondary,
-    marginBottom: 16,
+    marginBottom: 20,
+    lineHeight: 20,
   },
   label: {
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: '600',
     color: COLORS.text,
-    marginTop: 8,
-    marginBottom: 4,
+    marginTop: 12,
+    marginBottom: 6,
   },
   pickerContainer: {
     borderWidth: 1,

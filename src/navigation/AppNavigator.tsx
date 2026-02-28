@@ -48,7 +48,10 @@ const AppNavigator: React.FC<Props> = ({ learners, setLearners }) => {
       </Stack.Screen>
       <Stack.Screen
         name="LearnerDetail"
-        options={{ title: 'Learner Details' }}
+        options={{
+          title: 'Learner Details',
+          headerTitleStyle: { fontWeight: '700', fontSize: 18 },
+        }}
         component={LearnerDetailScreen}
       />
     </Stack.Navigator>
