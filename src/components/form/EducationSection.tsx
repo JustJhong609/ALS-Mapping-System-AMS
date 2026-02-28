@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Text, HelperText } from 'react-native-paper';
+import { Text, HelperText, RadioButton, TouchableRipple } from 'react-native-paper';
 import { LearnerFormData, ValidationErrors } from '../../types';
-import { GRADE_LEVELS, REASON_OPTIONS, COLORS } from '../../utils/constants';
+import { GRADE_LEVELS, REASON_OPTIONS, CURRENTLY_STUDYING_OPTIONS, COLORS } from '../../utils/constants';
 import DropdownPicker from '../common/DropdownPicker';
 
 interface Props {
@@ -16,10 +16,33 @@ const EducationSection: React.FC<Props> = ({ data, errors, onChange }) => {
     <View style={styles.container}>
       <Text style={styles.sectionTitle}>🎓 Education Background</Text>
       <Text style={styles.subtitle}>
-        Both fields are required. Select the most appropriate options.
+        All fields are required. Select the most appropriate options.
       </Text>
 
-      {/* Last Grade Completed */}
+      {/* Currently Studying */}
+      <Text style={styles.label}>Currently Studying? *</Text>
+      <RadioButton.Group
+        onValueChange={v => onChange('currentlyStudying', v)}
+        value={data.currentlyStudying}>
+        <View style={styles.radioRow}>
+          {CURRENTLY_STUDYING_OPTIONS.map(option => (
+            <TouchableRipple
+              key={option}
+              onPress={() => onChange('currentlyStudying', option)}
+              style={styles.radioItem}>
+              <View style={styles.radioItemInner}>
+                <RadioButton value={option} color={COLORS.primary} />
+                <Text style={styles.radioLabel}>{option}</Text>
+              </View>
+            </TouchableRipple>
+          ))}
+        </View>
+      </RadioButton.Group>
+      {errors.currentlyStudying && (
+        <HelperText type="error">{errors.currentlyStudying}</HelperText>
+      )}
+
+      {/* Last Grade Completed */}}
       <Text style={styles.label}>Last Grade / Level Completed *</Text>
       <DropdownPicker
         label="Last Grade Completed"
@@ -72,6 +95,27 @@ const styles = StyleSheet.create({
     color: COLORS.text,
     marginTop: 12,
     marginBottom: 6,
+  },
+  radioRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 4,
+  },
+  radioItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: 20,
+    paddingVertical: 6,
+    paddingHorizontal: 4,
+    borderRadius: 8,
+  },
+  radioItemInner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  radioLabel: {
+    fontSize: 16,
+    color: COLORS.text,
   },
   pickerContainer: {
     borderWidth: 1,
