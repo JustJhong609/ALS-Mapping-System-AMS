@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { TextInput, Text } from 'react-native-paper';
+import { TextInput, Text, HelperText } from 'react-native-paper';
 import { LearnerFormData, ValidationErrors } from '../../types';
-import { COLORS } from '../../utils/constants';
+import { FAMILY_ROLE_OPTIONS, COLORS } from '../../utils/constants';
+import DropdownPicker from '../common/DropdownPicker';
 
 interface Props {
   data: LearnerFormData;
@@ -10,13 +11,27 @@ interface Props {
   onChange: (field: keyof LearnerFormData, value: any) => void;
 }
 
-const FamilySection: React.FC<Props> = ({ data, errors: _errors, onChange }) => {
+const FamilySection: React.FC<Props> = ({ data, errors, onChange }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.sectionTitle}>👨‍👩‍👧 Family Information</Text>
       <Text style={styles.subtitle}>
-        All fields in this section are optional. Fill in what you can.
+        Role in the family is required. Other fields are optional.
       </Text>
+
+      {/* Role in the Family */}
+      <Text style={styles.label}>Role in the Family *</Text>
+      <DropdownPicker
+        label="Role in the Family"
+        selectedValue={data.roleInFamily}
+        onValueChange={v => onChange('roleInFamily', v)}
+        options={FAMILY_ROLE_OPTIONS}
+        placeholder="-- Select Relationship to Head --"
+        error={!!errors.roleInFamily}
+      />
+      {errors.roleInFamily && (
+        <HelperText type="error">{errors.roleInFamily}</HelperText>
+      )}
 
       <TextInput
         label="Father's Name"
@@ -84,6 +99,13 @@ const styles = StyleSheet.create({
     marginBottom: 14,
     backgroundColor: COLORS.white,
     fontSize: 16,
+  },
+  label: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: COLORS.text,
+    marginBottom: 6,
+    marginTop: 12,
   },
 });
 

@@ -8,7 +8,7 @@ import {
   TouchableRipple,
 } from 'react-native-paper';
 import { LearnerFormData, ValidationErrors } from '../../types';
-import { SEX_OPTIONS, MOTHER_TONGUE_OPTIONS, COLORS } from '../../utils/constants';
+import { SEX_OPTIONS, MOTHER_TONGUE_OPTIONS, CIVIL_STATUS_OPTIONS, YES_NO_OPTIONS, COLORS } from '../../utils/constants';
 import { calculateAge } from '../../utils/validation';
 import DropdownPicker from '../common/DropdownPicker';
 
@@ -139,6 +139,20 @@ const PersonalInfoSection: React.FC<Props> = ({ data, errors, onChange }) => {
       </RadioButton.Group>
       {errors.sex && <HelperText type="error">{errors.sex}</HelperText>}
 
+      {/* Civil Status */}
+      <Text style={styles.label}>Civil Status *</Text>
+      <DropdownPicker
+        label="Civil Status"
+        selectedValue={data.civilStatus}
+        onValueChange={v => onChange('civilStatus', v)}
+        options={CIVIL_STATUS_OPTIONS}
+        placeholder="-- Select Civil Status --"
+        error={!!errors.civilStatus}
+      />
+      {errors.civilStatus && (
+        <HelperText type="error">{errors.civilStatus}</HelperText>
+      )}
+
       {/* Birthdate */}
       <TextInput
         label="Birthdate * (MM/DD/YYYY)"
@@ -183,16 +197,69 @@ const PersonalInfoSection: React.FC<Props> = ({ data, errors, onChange }) => {
         <HelperText type="error">{errors.motherTongue}</HelperText>
       )}
 
-      {/* IP / Ethnic Group (optional) */}
-      <TextInput
-        label="IP / Ethnic Group"
-        value={data.ipEthnicGroup}
-        onChangeText={v => onChange('ipEthnicGroup', v)}
-        mode="outlined"
-        style={styles.input}
-        outlineColor={COLORS.border}
-        activeOutlineColor={COLORS.primary}
-      />
+      {/* IP / Indigenous Peoples (Yes/No) */}
+      <Text style={styles.label}>Belongs to Indigenous Peoples (IP)?</Text>
+      <RadioButton.Group
+        onValueChange={v => {
+          onChange('isIP', v);
+          if (v === 'No') onChange('ipTribe', '');
+        }}
+        value={data.isIP}>
+        <View style={styles.radioRow}>
+          {YES_NO_OPTIONS.map(option => (
+            <TouchableRipple
+              key={`ip-${option}`}
+              onPress={() => {
+                onChange('isIP', option);
+                if (option === 'No') onChange('ipTribe', '');
+              }}
+              style={styles.radioItem}>
+              <View style={styles.radioItemInner}>
+                <RadioButton value={option} color={COLORS.primary} />
+                <Text>{option}</Text>
+              </View>
+            </TouchableRipple>
+          ))}
+        </View>
+      </RadioButton.Group>
+
+      {/* Tribe name (shown only if IP = Yes) */}
+      {data.isIP === 'Yes' && (
+        <TextInput
+          label="Tribe / Ethnic Group *"
+          value={data.ipTribe}
+          onChangeText={v => onChange('ipTribe', v)}
+          mode="outlined"
+          style={styles.input}
+          error={!!errors.ipTribe}
+          outlineColor={COLORS.border}
+          activeOutlineColor={COLORS.primary}
+          placeholder="e.g. Talaandig, Higaonon, Manobo"
+        />
+      )}
+      {errors.ipTribe && (
+        <HelperText type="error">{errors.ipTribe}</HelperText>
+      )}
+
+      {/* 4P's Member */}
+      <Text style={styles.label}>Member of 4P's (Pantawid Pamilya)?</Text>
+      <RadioButton.Group
+        onValueChange={v => onChange('is4PsMember', v)}
+        value={data.is4PsMember}>
+        <View style={styles.radioRow}>
+          {YES_NO_OPTIONS.map(option => (
+            <TouchableRipple
+              key={`4ps-${option}`}
+              onPress={() => onChange('is4PsMember', option)}
+              style={styles.radioItem}>
+              <View style={styles.radioItemInner}>
+                <RadioButton value={option} color={COLORS.primary} />
+                <Text>{option}</Text>
+              </View>
+            </TouchableRipple>
+          ))}
+        </View>
+      </RadioButton.Group>
 
       {/* Religion (optional) */}
       <TextInput

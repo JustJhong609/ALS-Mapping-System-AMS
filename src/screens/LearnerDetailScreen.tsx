@@ -75,8 +75,13 @@ const LearnerDetailScreen: React.FC<Props> = ({ navigation, route }) => {
             />
             <InfoRow label="Age" value={learner.age} />
             <InfoRow label="Mother Tongue" value={learner.motherTongue} />
-            <InfoRow label="IP / Ethnic Group" value={learner.ipEthnicGroup} />
+            <InfoRow label="Indigenous Peoples (IP)" value={learner.isIP ? 'Yes' : 'No'} />
+            {learner.isIP && learner.ipTribe && (
+              <InfoRow label="Tribe / Ethnic Group" value={learner.ipTribe} />
+            )}
+            <InfoRow label="4P's Member" value={learner.is4PsMember ? 'Yes' : 'No'} />
             <InfoRow label="Religion" value={learner.religion} />
+            <InfoRow label="Civil Status" value={learner.civilStatus} />
           </Card.Content>
         </Card>
 
@@ -96,6 +101,7 @@ const LearnerDetailScreen: React.FC<Props> = ({ navigation, route }) => {
             titleStyle={styles.cardTitle}
           />
           <Card.Content>
+            <InfoRow label="Role in the Family" value={learner.roleInFamily} />
             <InfoRow label="Father's Name" value={learner.fatherName} />
             <InfoRow label="Mother's Name" value={learner.motherName} />
             <InfoRow label="Guardian's Name" value={learner.guardianName} />
@@ -113,6 +119,10 @@ const LearnerDetailScreen: React.FC<Props> = ({ navigation, route }) => {
             titleStyle={styles.cardTitle}
           />
           <Card.Content>
+            <InfoRow
+              label="Currently Studying"
+              value={learner.currentlyStudying}
+            />
             <InfoRow
               label="Last Grade Completed"
               value={learner.lastGradeCompleted}

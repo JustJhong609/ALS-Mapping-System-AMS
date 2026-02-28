@@ -18,23 +18,28 @@ export const createEmptyFormData = (): LearnerFormData => ({
   middleName: '',
   nameExtension: '',
   sex: '',
+  civilStatus: '',
   birthdate: null,
   age: null,
   motherTongue: '',
-  ipEthnicGroup: '',
+  isIP: '',
+  ipTribe: '',
   religion: '',
+  is4PsMember: '',
 
   // Address
   barangay: '',
   completeAddress: '',
 
   // Family
+  roleInFamily: '',
   fatherName: '',
   motherName: '',
   guardianName: '',
   guardianOccupation: '',
 
   // Educational Background
+  currentlyStudying: '',
   lastGradeCompleted: '',
   reasonForNotAttending: '',
 

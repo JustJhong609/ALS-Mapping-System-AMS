@@ -18,23 +18,28 @@ export interface Learner {
   middleName: string;
   nameExtension?: string;
   sex: 'Male' | 'Female';
+  civilStatus: string;
   birthdate: Date;
   age: number;
   motherTongue: string;
-  ipEthnicGroup?: string;
+  isIP: boolean;
+  ipTribe?: string;
   religion?: string;
+  is4PsMember: boolean;
 
   // Address
   barangay: string;
   completeAddress: string;
 
   // Family
+  roleInFamily: string;
   fatherName?: string;
   motherName?: string;
   guardianName?: string;
   guardianOccupation?: string;
 
   // Educational Background
+  currentlyStudying: string;
   lastGradeCompleted: string;
   reasonForNotAttending: string;
 
@@ -49,6 +54,9 @@ export interface Learner {
  * Navigation param list for the stack navigator.
  */
 export type RootStackParamList = {
+  Login: undefined;
+  Home: undefined;
+  Analytics: undefined;
   LearnerList: undefined;
   LearnerForm: { learner?: Learner };
   LearnerDetail: { learner: Learner };
@@ -71,23 +79,28 @@ export interface LearnerFormData {
   middleName: string;
   nameExtension: string;
   sex: 'Male' | 'Female' | '';
+  civilStatus: string;
   birthdate: Date | null;
   age: number | null;
   motherTongue: string;
-  ipEthnicGroup: string;
+  isIP: string;
+  ipTribe: string;
   religion: string;
+  is4PsMember: string;
 
   // Address
   barangay: string;
   completeAddress: string;
 
   // Family
+  roleInFamily: string;
   fatherName: string;
   motherName: string;
   guardianName: string;
   guardianOccupation: string;
 
   // Educational Background
+  currentlyStudying: string;
   lastGradeCompleted: string;
   reasonForNotAttending: string;
 

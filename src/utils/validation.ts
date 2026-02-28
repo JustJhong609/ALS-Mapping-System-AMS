@@ -45,11 +45,17 @@ export const validatePersonalInfo = (
   if (!data.sex) {
     errors.sex = 'Sex is required';
   }
+  if (!data.civilStatus) {
+    errors.civilStatus = 'Civil status is required';
+  }
   if (!data.birthdate) {
     errors.birthdate = 'Birthdate is required';
   }
   if (!data.motherTongue) {
     errors.motherTongue = 'Mother tongue is required';
+  }
+  if (data.isIP === 'Yes' && !data.ipTribe.trim()) {
+    errors.ipTribe = 'Please specify the tribe / ethnic group';
   }
 
   return {
@@ -79,12 +85,19 @@ export const validateAddress = (data: LearnerFormData): ValidationResult => {
 
 /**
  * Validate Section 3 – Family Information.
- * All fields are optional so this always passes.
  */
-export const validateFamily = (_data: LearnerFormData): ValidationResult => ({
-  isValid: true,
-  errors: {},
-});
+export const validateFamily = (data: LearnerFormData): ValidationResult => {
+  const errors: Record<string, string> = {};
+
+  if (!data.roleInFamily) {
+    errors.roleInFamily = 'Role in the family is required';
+  }
+
+  return {
+    isValid: Object.keys(errors).length === 0,
+    errors,
+  };
+};
 
 /**
  * Validate Section 4 – Education Background.
@@ -92,6 +105,9 @@ export const validateFamily = (_data: LearnerFormData): ValidationResult => ({
 export const validateEducation = (data: LearnerFormData): ValidationResult => {
   const errors: Record<string, string> = {};
 
+  if (!data.currentlyStudying) {
+    errors.currentlyStudying = 'Please indicate if currently studying';
+  }
   if (!data.lastGradeCompleted) {
     errors.lastGradeCompleted = 'Last grade completed is required';
   }

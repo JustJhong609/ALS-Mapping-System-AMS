@@ -21,6 +21,8 @@ import {
   Badge,
 } from 'react-native-paper';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { FadeInDown } from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 import { Learner, RootStackParamList } from '../types';
 import { COLORS, DISTRICT } from '../utils/constants';
 
@@ -61,12 +63,14 @@ const LearnerListScreen: React.FC<Props> = ({
     setShowDeleteDialog(true);
   };
 
-  const renderItem = ({ item }: { item: Learner }) => {
+  const renderItem = ({ item, index }: { item: Learner; index: number }) => {
     const initials = `${item.firstName.charAt(0)}${item.lastName.charAt(0)}`.toUpperCase();
     const fullName = `${item.lastName}, ${item.firstName} ${item.middleName}`;
     const description = `Age: ${item.age} | ${item.sex}\n${item.completeAddress}`;
 
     return (
+      <Animated.View
+        entering={FadeInDown.delay(index * 60).duration(350).springify().damping(15)}>
       <Card
         style={styles.card}
         onPress={() => navigation.navigate('LearnerDetail', { learner: item })}>
@@ -106,6 +110,7 @@ const LearnerListScreen: React.FC<Props> = ({
           )}
         />
       </Card>
+      </Animated.View>
     );
   };
 
