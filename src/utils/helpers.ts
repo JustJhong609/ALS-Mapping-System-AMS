@@ -10,6 +10,7 @@ export const createEmptyFormData = (): LearnerFormData => ({
   division: DIVISION,
   district: DISTRICT,
   calendarYear: new Date().getFullYear(),
+  mappedBy: '',
 
   // Personal Information
   lastName: '',
@@ -24,6 +25,7 @@ export const createEmptyFormData = (): LearnerFormData => ({
   religion: '',
 
   // Address
+  barangay: '',
   completeAddress: '',
 
   // Family

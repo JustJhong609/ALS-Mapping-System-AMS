@@ -53,6 +53,7 @@ const LearnerDetailScreen: React.FC<Props> = ({ navigation, route }) => {
             <InfoRow label="Division" value={learner.division} />
             <InfoRow label="District" value={learner.district} />
             <InfoRow label="Calendar Year" value={learner.calendarYear} />
+            <InfoRow label="Mapped By" value={learner.mappedBy} />
           </Card.Content>
         </Card>
 
@@ -83,6 +84,7 @@ const LearnerDetailScreen: React.FC<Props> = ({ navigation, route }) => {
         <Card style={styles.card}>
           <Card.Title title="Address" titleStyle={styles.cardTitle} />
           <Card.Content>
+            <InfoRow label="Barangay" value={learner.barangay} />
             <InfoRow label="Complete Address" value={learner.completeAddress} />
           </Card.Content>
         </Card>

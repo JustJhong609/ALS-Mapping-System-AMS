@@ -10,6 +10,7 @@ export interface Learner {
   division: string;
   district: string;
   calendarYear: number;
+  mappedBy: string;
 
   // Personal Information
   lastName: string;
@@ -24,6 +25,7 @@ export interface Learner {
   religion?: string;
 
   // Address
+  barangay: string;
   completeAddress: string;
 
   // Family
@@ -61,6 +63,7 @@ export interface LearnerFormData {
   division: string;
   district: string;
   calendarYear: number;
+  mappedBy: string;
 
   // Personal Information
   lastName: string;
@@ -75,6 +78,7 @@ export interface LearnerFormData {
   religion: string;
 
   // Address
+  barangay: string;
   completeAddress: string;
 
   // Family

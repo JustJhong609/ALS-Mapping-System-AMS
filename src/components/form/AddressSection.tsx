@@ -2,7 +2,8 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { TextInput, Text, HelperText } from 'react-native-paper';
 import { LearnerFormData, ValidationErrors } from '../../types';
-import { COLORS } from '../../utils/constants';
+import { BARANGAY_OPTIONS, COLORS } from '../../utils/constants';
+import DropdownPicker from '../common/DropdownPicker';
 
 interface Props {
   data: LearnerFormData;
@@ -15,10 +16,24 @@ const AddressSection: React.FC<Props> = ({ data, errors, onChange }) => {
     <View style={styles.container}>
       <Text style={styles.sectionTitle}>Address</Text>
       <Text style={styles.subtitle}>
-        Provide the learner's complete address including barangay, municipality,
-        and province.
+        Provide the learner’s barangay and complete address.
       </Text>
 
+      {/* Barangay */}
+      <Text style={styles.label}>Barangay *</Text>
+      <DropdownPicker
+        label="Barangay"
+        selectedValue={data.barangay}
+        onValueChange={v => onChange('barangay', v)}
+        options={BARANGAY_OPTIONS}
+        placeholder="-- Select Barangay --"
+        error={!!errors.barangay}
+      />
+      {errors.barangay && (
+        <HelperText type="error">{errors.barangay}</HelperText>
+      )}
+
+      {/* Complete Address */}
       <TextInput
         label="Complete Address *"
         value={data.completeAddress}
@@ -53,6 +68,13 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: COLORS.textSecondary,
     marginBottom: 16,
+  },
+  label: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: COLORS.text,
+    marginBottom: 4,
+    marginTop: 8,
   },
   input: {
     marginBottom: 8,

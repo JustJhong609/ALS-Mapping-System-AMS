@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import {
   TextInput,
@@ -11,7 +11,6 @@ import { LearnerFormData, ValidationErrors } from '../../types';
 import { SEX_OPTIONS, MOTHER_TONGUE_OPTIONS, COLORS } from '../../utils/constants';
 import { calculateAge } from '../../utils/validation';
 import DropdownPicker from '../common/DropdownPicker';
-import DatePickerField from '../common/DatePickerField';
 
 interface Props {
   data: LearnerFormData;
@@ -20,15 +19,46 @@ interface Props {
 }
 
 const PersonalInfoSection: React.FC<Props> = ({ data, errors, onChange }) => {
-  const handleDateChange = (selectedDate: Date) => {
-    onChange('birthdate', selectedDate);
-    onChange('age', calculateAge(selectedDate));
+  // Local text state so user can type freely; parsed on valid input
+  const [birthdateText, setBirthdateText] = useState(
+    data.birthdate
+      ? `${data.birthdate.getMonth() + 1}/${data.birthdate.getDate()}/${data.birthdate.getFullYear()}`
+      : '',
+  );
+
+  const handleBirthdateChange = (text: string) => {
+    setBirthdateText(text);
+    // Try to parse: accept MM/DD/YYYY
+    const parsed = new Date(text);
+    if (!isNaN(parsed.getTime()) && text.length >= 8) {
+      onChange('birthdate', parsed);
+      onChange('age', calculateAge(parsed));
+    } else {
+      onChange('birthdate', null);
+      onChange('age', null);
+    }
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.sectionTitle}>Personal Information</Text>
       <Text style={styles.subtitle}>Fields marked with * are required</Text>
+
+      {/* Mapped By */}
+      <TextInput
+        label="Mapped By (Facilitator Name) *"
+        value={data.mappedBy}
+        onChangeText={v => onChange('mappedBy', v)}
+        mode="outlined"
+        style={styles.input}
+        error={!!errors.mappedBy}
+        outlineColor={COLORS.border}
+        activeOutlineColor={COLORS.primary}
+        placeholder="Full name of ALS facilitator"
+      />
+      {errors.mappedBy && (
+        <HelperText type="error">{errors.mappedBy}</HelperText>
+      )}
 
       {/* Last Name */}
       <TextInput
@@ -108,13 +138,18 @@ const PersonalInfoSection: React.FC<Props> = ({ data, errors, onChange }) => {
       {errors.sex && <HelperText type="error">{errors.sex}</HelperText>}
 
       {/* Birthdate */}
-      <Text style={styles.label}>Birthdate *</Text>
-      <DatePickerField
-        value={data.birthdate}
-        onChange={handleDateChange}
-        placeholder="Select birthdate"
+      <TextInput
+        label="Birthdate * (MM/DD/YYYY)"
+        value={birthdateText}
+        onChangeText={handleBirthdateChange}
+        mode="outlined"
+        style={styles.input}
+        placeholder="e.g. 01/15/2000"
+        keyboardType="numeric"
+        maxLength={10}
         error={!!errors.birthdate}
-        maximumDate={new Date()}
+        outlineColor={COLORS.border}
+        activeOutlineColor={COLORS.primary}
       />
       {errors.birthdate && (
         <HelperText type="error">{errors.birthdate}</HelperText>

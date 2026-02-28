@@ -40,6 +40,7 @@ const LearnerFormScreen: React.FC<Props> = ({
         division: editingLearner.division,
         district: editingLearner.district,
         calendarYear: editingLearner.calendarYear,
+        mappedBy: editingLearner.mappedBy,
         lastName: editingLearner.lastName,
         firstName: editingLearner.firstName,
         middleName: editingLearner.middleName,
@@ -50,6 +51,7 @@ const LearnerFormScreen: React.FC<Props> = ({
         motherTongue: editingLearner.motherTongue,
         ipEthnicGroup: editingLearner.ipEthnicGroup || '',
         religion: editingLearner.religion || '',
+        barangay: editingLearner.barangay,
         completeAddress: editingLearner.completeAddress,
         fatherName: editingLearner.fatherName || '',
         motherName: editingLearner.motherName || '',
@@ -112,6 +114,7 @@ const LearnerFormScreen: React.FC<Props> = ({
       division: formData.division,
       district: formData.district,
       calendarYear: formData.calendarYear,
+      mappedBy: formData.mappedBy.trim(),
       lastName: formData.lastName.trim(),
       firstName: formData.firstName.trim(),
       middleName: formData.middleName.trim(),
@@ -122,6 +125,7 @@ const LearnerFormScreen: React.FC<Props> = ({
       motherTongue: formData.motherTongue,
       ipEthnicGroup: formData.ipEthnicGroup.trim() || undefined,
       religion: formData.religion.trim() || undefined,
+      barangay: formData.barangay,
       completeAddress: formData.completeAddress.trim(),
       fatherName: formData.fatherName.trim() || undefined,
       motherName: formData.motherName.trim() || undefined,
@@ -156,11 +160,11 @@ const LearnerFormScreen: React.FC<Props> = ({
       case 0:
         return <PersonalInfoSection {...sectionProps} />;
       case 1:
-        return <AddressSection {...sectionProps} />;
-      case 2:
-        return <FamilySection {...sectionProps} />;
-      case 3:
         return <EducationSection {...sectionProps} />;
+      case 2:
+        return <AddressSection {...sectionProps} />;
+      case 3:
+        return <FamilySection {...sectionProps} />;
       case 4:
         return <LogisticsSection {...sectionProps} />;
       default:

@@ -30,6 +30,9 @@ export const validatePersonalInfo = (
 ): ValidationResult => {
   const errors: Record<string, string> = {};
 
+  if (!data.mappedBy.trim()) {
+    errors.mappedBy = 'Mapper name is required';
+  }
   if (!data.lastName.trim()) {
     errors.lastName = 'Last name is required';
   }
@@ -61,6 +64,9 @@ export const validatePersonalInfo = (
 export const validateAddress = (data: LearnerFormData): ValidationResult => {
   const errors: Record<string, string> = {};
 
+  if (!data.barangay) {
+    errors.barangay = 'Barangay is required';
+  }
   if (!data.completeAddress.trim()) {
     errors.completeAddress = 'Complete address is required';
   }
@@ -135,11 +141,11 @@ export const validateSection = (
     case 0:
       return validatePersonalInfo(data);
     case 1:
-      return validateAddress(data);
-    case 2:
-      return validateFamily(data);
-    case 3:
       return validateEducation(data);
+    case 2:
+      return validateAddress(data);
+    case 3:
+      return validateFamily(data);
     case 4:
       return validateLogistics(data);
     default:

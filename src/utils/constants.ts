@@ -47,6 +47,16 @@ export const REASON_OPTIONS: readonly string[] = [
   'Cannot cope with school work',
 ];
 
+/** Barangays in Manolo Fortich District I */
+export const BARANGAY_OPTIONS: readonly string[] = [
+  'Ticala',
+  'Santo Niño',
+  'Dicklum',
+  'Tankulan',
+  'Lingion',
+  'San Miguel',
+];
+
 /** Transport mode options */
 export const TRANSPORT_OPTIONS: readonly string[] = [
   'Walking',
@@ -60,22 +70,10 @@ export const TRANSPORT_OPTIONS: readonly string[] = [
 
 /** Last grade / level completed */
 export const GRADE_LEVELS: readonly string[] = [
-  'No formal schooling',
-  'Kinder',
-  'Grade 1',
-  'Grade 2',
-  'Grade 3',
-  'Grade 4',
-  'Grade 5',
-  'Grade 6',
-  'Grade 7',
-  'Grade 8',
-  'Grade 9',
-  'Grade 10',
-  'Grade 11',
-  'Grade 12',
-  'College Undergraduate',
-  'College Graduate',
+  'BLP (Basic Literacy Program)',
+  'Elementary',
+  'JHS (Junior High School)',
+  'SHS (Senior High School)',
 ];
 
 /** Preferred session time options */
@@ -89,9 +87,9 @@ export const SESSION_TIME_OPTIONS: readonly string[] = [
 /** Form section titles for the wizard */
 export const FORM_SECTIONS: readonly string[] = [
   'Personal Information',
+  'Education Background',
   'Address',
   'Family Information',
-  'Education Background',
   'Logistics & Schedule',
 ];
 
