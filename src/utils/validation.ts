@@ -1,0 +1,160 @@
+import { LearnerFormData, ValidationResult } from '../types';
+
+/**
+ * Calculate age from a birthdate.
+ */
+export const calculateAge = (birthdate: Date): number => {
+  const today = new Date();
+  let age = today.getFullYear() - birthdate.getFullYear();
+  const monthDiff = today.getMonth() - birthdate.getMonth();
+  if (
+    monthDiff < 0 ||
+    (monthDiff === 0 && today.getDate() < birthdate.getDate())
+  ) {
+    age--;
+  }
+  return age;
+};
+
+/**
+ * Generate a simple unique ID (no crypto dependency needed).
+ */
+export const generateId = (): string =>
+  `${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
+
+/**
+ * Validate Section 1 – Personal Information.
+ */
+export const validatePersonalInfo = (
+  data: LearnerFormData,
+): ValidationResult => {
+  const errors: Record<string, string> = {};
+
+  if (!data.lastName.trim()) {
+    errors.lastName = 'Last name is required';
+  }
+  if (!data.firstName.trim()) {
+    errors.firstName = 'First name is required';
+  }
+  if (!data.middleName.trim()) {
+    errors.middleName = 'Middle name is required';
+  }
+  if (!data.sex) {
+    errors.sex = 'Sex is required';
+  }
+  if (!data.birthdate) {
+    errors.birthdate = 'Birthdate is required';
+  }
+  if (!data.motherTongue) {
+    errors.motherTongue = 'Mother tongue is required';
+  }
+
+  return {
+    isValid: Object.keys(errors).length === 0,
+    errors,
+  };
+};
+
+/**
+ * Validate Section 2 – Address.
+ */
+export const validateAddress = (data: LearnerFormData): ValidationResult => {
+  const errors: Record<string, string> = {};
+
+  if (!data.completeAddress.trim()) {
+    errors.completeAddress = 'Complete address is required';
+  }
+
+  return {
+    isValid: Object.keys(errors).length === 0,
+    errors,
+  };
+};
+
+/**
+ * Validate Section 3 – Family Information.
+ * All fields are optional so this always passes.
+ */
+export const validateFamily = (_data: LearnerFormData): ValidationResult => ({
+  isValid: true,
+  errors: {},
+});
+
+/**
+ * Validate Section 4 – Education Background.
+ */
+export const validateEducation = (data: LearnerFormData): ValidationResult => {
+  const errors: Record<string, string> = {};
+
+  if (!data.lastGradeCompleted) {
+    errors.lastGradeCompleted = 'Last grade completed is required';
+  }
+  if (!data.reasonForNotAttending) {
+    errors.reasonForNotAttending = 'Reason for not attending is required';
+  }
+
+  return {
+    isValid: Object.keys(errors).length === 0,
+    errors,
+  };
+};
+
+/**
+ * Validate Section 5 – Logistics & Schedule.
+ */
+export const validateLogistics = (data: LearnerFormData): ValidationResult => {
+  const errors: Record<string, string> = {};
+
+  if (!data.distanceKm || parseFloat(data.distanceKm) <= 0) {
+    errors.distanceKm = 'Valid distance is required';
+  }
+  if (!data.travelTime.trim()) {
+    errors.travelTime = 'Travel time is required';
+  }
+  if (!data.transportMode) {
+    errors.transportMode = 'Transport mode is required';
+  }
+  if (!data.preferredSessionTime) {
+    errors.preferredSessionTime = 'Preferred session time is required';
+  }
+
+  return {
+    isValid: Object.keys(errors).length === 0,
+    errors,
+  };
+};
+
+/**
+ * Run the validator for a specific form section (0-indexed).
+ */
+export const validateSection = (
+  sectionIndex: number,
+  data: LearnerFormData,
+): ValidationResult => {
+  switch (sectionIndex) {
+    case 0:
+      return validatePersonalInfo(data);
+    case 1:
+      return validateAddress(data);
+    case 2:
+      return validateFamily(data);
+    case 3:
+      return validateEducation(data);
+    case 4:
+      return validateLogistics(data);
+    default:
+      return { isValid: true, errors: {} };
+  }
+};
+
+/**
+ * Format a Date object as a readable string.
+ */
+export const formatDate = (date: Date | null): string => {
+  if (!date) return '';
+  return date.toLocaleDateString('en-PH', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+};

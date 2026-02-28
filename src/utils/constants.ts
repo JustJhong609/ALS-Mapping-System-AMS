@@ -1,0 +1,112 @@
+// ──────────────────────────────────────────────
+// ALS Form 1 – Manolo Fortich District I
+// Fixed values & dropdown options
+// ──────────────────────────────────────────────
+
+/** Pre-filled administrative fields */
+export const REGION = 'Region X (Northern Mindanao)';
+export const DIVISION = 'Bukidnon Division';
+export const DISTRICT = 'Manolo Fortich District I';
+
+/** Sex radio options */
+export const SEX_OPTIONS: readonly string[] = ['Male', 'Female'];
+
+/** Mother-tongue dropdown */
+export const MOTHER_TONGUE_OPTIONS: readonly string[] = [
+  'Tagalog',
+  'Kapampangan',
+  'Pangasinense',
+  'Iloko',
+  'Bikol',
+  'Cebuano',
+  'Hiligaynon',
+  'Waray',
+  'Tausug',
+  'Maguindanaoan',
+  'Maranao',
+  'Chabacano',
+  'Ybanag',
+  'Ivatan',
+  'Samal',
+  'Aklanon',
+  'Kinaray-a',
+  'Yakan',
+  'Surigaonon',
+];
+
+/** Reason for not attending school */
+export const REASON_OPTIONS: readonly string[] = [
+  'Schools are very far',
+  'No school within the barangay',
+  'No regular transportation',
+  'High cost of education',
+  'Illness / Disability',
+  'Housekeeping / Housework',
+  'Employment / Looking for work',
+  'Lack of personal interest',
+  'Cannot cope with school work',
+];
+
+/** Transport mode options */
+export const TRANSPORT_OPTIONS: readonly string[] = [
+  'Walking',
+  'Tricycle',
+  'Habal-habal',
+  'Jeepney',
+  'Multicab',
+  'Private Vehicle',
+  'Bicycle',
+];
+
+/** Last grade / level completed */
+export const GRADE_LEVELS: readonly string[] = [
+  'No formal schooling',
+  'Kinder',
+  'Grade 1',
+  'Grade 2',
+  'Grade 3',
+  'Grade 4',
+  'Grade 5',
+  'Grade 6',
+  'Grade 7',
+  'Grade 8',
+  'Grade 9',
+  'Grade 10',
+  'Grade 11',
+  'Grade 12',
+  'College Undergraduate',
+  'College Graduate',
+];
+
+/** Preferred session time options */
+export const SESSION_TIME_OPTIONS: readonly string[] = [
+  'Morning (8:00 AM – 12:00 PM)',
+  'Afternoon (1:00 PM – 5:00 PM)',
+  'Evening (6:00 PM – 9:00 PM)',
+  'Weekends Only',
+];
+
+/** Form section titles for the wizard */
+export const FORM_SECTIONS: readonly string[] = [
+  'Personal Information',
+  'Address',
+  'Family Information',
+  'Education Background',
+  'Logistics & Schedule',
+];
+
+/** App theme colours */
+export const COLORS = {
+  primary: '#1565C0',
+  primaryDark: '#0D47A1',
+  primaryLight: '#42A5F5',
+  accent: '#FF6F00',
+  surface: '#FFFFFF',
+  background: '#F5F5F5',
+  error: '#D32F2F',
+  text: '#212121',
+  textSecondary: '#757575',
+  border: '#E0E0E0',
+  success: '#2E7D32',
+  white: '#FFFFFF',
+} as const;
