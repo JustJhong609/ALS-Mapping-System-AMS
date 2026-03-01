@@ -12,6 +12,22 @@ This application digitizes **ALS Form 1** — the official community mapping and
 
 ---
 
+## Project Summary for Coding Agents
+
+This is a **React Native mobile application** built with **Expo and TypeScript** that digitizes the DepEd ALS Form 1 community-mapping process for Manolo Fortich District I in the Philippines, where ALS facilitators register and manage records of potential adult learners they encounter during field visits.
+
+The entire application state (the list of learner records) lives in a single `useState` array declared in `src/App.tsx` and passed down through the `AppNavigator` as props. There is no database, no API, and no persistence layer — data is lost when the app is restarted. The root component wraps everything in `SafeAreaProvider`, `PaperProvider` (React Native Paper / Material Design 3 theme), and React Navigation's `NavigationContainer`.
+
+Navigation is handled by a single React Navigation **Native Stack** defined in `src/navigation/AppNavigator.tsx`. The stack has six screens: `Login → Home → LearnerList → LearnerForm → LearnerDetail → Analytics`. `Login` is a placeholder screen with no real authentication. `Home` is a simple hub with buttons to reach `LearnerList` and `Analytics`. `LearnerList` renders the in-memory learner array as searchable cards with add/edit/delete actions. `LearnerForm` is a **5-step wizard** for creating or editing a learner record. `LearnerDetail` is a read-only summary. `Analytics` shows aggregate statistics derived from the in-memory list.
+
+The **Learner data model** (`src/types/index.ts`) is a TypeScript interface with roughly 40 fields grouped into six logical sections: Administrative, Personal, Address, Family, Education, and Logistics. Key fields include full name, sex, birthdate, barangay, last grade completed, reason for not attending school, employment status, and preferred session time. A parallel `LearnerFormData` interface mirrors `Learner` but uses `string` and `Date | null` types to accommodate unvalidated form input before it is committed to the learner record.
+
+The **5-step wizard** (`src/screens/LearnerFormScreen.tsx`) renders one of five section components at a time — `PersonalInfoSection`, `AddressSection`, `FamilySection`, `EducationSection`, and `LogisticsSection` (all in `src/components/form/`) — together with a `StepIndicator` progress bar. Validation runs per section before advancing; validators live in `src/utils/validation.ts` and return a `ValidationResult` (`{ isValid, errors }`). Picker options (barangays, transport modes, grade levels, etc.) are declared as `readonly string[]` constants in `src/utils/constants.ts`. Helper utilities are in `src/utils/helpers.ts`, which currently only exports `createEmptyFormData()`.
+
+The UI is styled using **React Native Paper** components (`TextInput`, `Button`, `Card`, `FAB`, `Dialog`, `RadioButton`, etc.) with a custom blue/amber theme (`COLORS` in `src/utils/constants.ts`). The app is portrait-mode and mobile-first, targeting Android and iOS via Expo Go or native builds.
+
+---
+
 ## Features
 
 - 📋 **5-Step Learner Registration Wizard** — structured form capturing 125+ fields per learner
