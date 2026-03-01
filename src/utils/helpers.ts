@@ -48,4 +48,5 @@ export const createEmptyFormData = (): LearnerFormData => ({
   travelTime: '',
   transportMode: '',
   preferredSessionTime: '',
+  dateMapped: null,
 });

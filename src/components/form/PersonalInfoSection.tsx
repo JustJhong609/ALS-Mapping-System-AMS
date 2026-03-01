@@ -46,22 +46,6 @@ const PersonalInfoSection: React.FC<Props> = ({ data, errors, onChange }) => {
         Fields marked with <Text style={{ fontWeight: '700', color: COLORS.error }}>*</Text> are required. Tap each field to fill in.
       </Text>
 
-      {/* Mapped By */}
-      <TextInput
-        label="Mapped By (Facilitator Name) *"
-        value={data.mappedBy}
-        onChangeText={v => onChange('mappedBy', v)}
-        mode="outlined"
-        style={styles.input}
-        error={!!errors.mappedBy}
-        outlineColor={COLORS.border}
-        activeOutlineColor={COLORS.primary}
-        placeholder="Full name of ALS facilitator"
-      />
-      {errors.mappedBy && (
-        <HelperText type="error">{errors.mappedBy}</HelperText>
-      )}
-
       {/* Last Name */}
       <TextInput
         label="Last Name *"

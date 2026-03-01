@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { TextInput, Text, HelperText } from 'react-native-paper';
 import { LearnerFormData, ValidationErrors } from '../../types';
@@ -16,6 +16,22 @@ interface Props {
 }
 
 const LogisticsSection: React.FC<Props> = ({ data, errors, onChange }) => {
+  const [dateMappedText, setDateMappedText] = useState(
+    data.dateMapped
+      ? `${data.dateMapped.getMonth() + 1}/${data.dateMapped.getDate()}/${data.dateMapped.getFullYear()}`
+      : '',
+  );
+
+  const handleDateMappedChange = (text: string) => {
+    setDateMappedText(text);
+    const parsed = new Date(text);
+    if (!isNaN(parsed.getTime()) && text.length >= 8) {
+      onChange('dateMapped', parsed);
+    } else {
+      onChange('dateMapped', null);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.sectionTitle}>🚌 Logistics & Schedule</Text>
@@ -82,6 +98,39 @@ const LogisticsSection: React.FC<Props> = ({ data, errors, onChange }) => {
       />
       {errors.preferredSessionTime && (
         <HelperText type="error">{errors.preferredSessionTime}</HelperText>
+      )}
+
+      {/* Mapped By */}
+      <TextInput
+        label="Mapped By (Facilitator Name) *"
+        value={data.mappedBy}
+        onChangeText={v => onChange('mappedBy', v)}
+        mode="outlined"
+        style={styles.input}
+        error={!!errors.mappedBy}
+        outlineColor={COLORS.border}
+        activeOutlineColor={COLORS.primary}
+        placeholder="Full name of ALS facilitator"
+      />
+      {errors.mappedBy && (
+        <HelperText type="error">{errors.mappedBy}</HelperText>
+      )}
+
+      {/* Date Mapped */}
+      <TextInput
+        label="Date Mapped (MM/DD/YYYY) *"
+        value={dateMappedText}
+        onChangeText={handleDateMappedChange}
+        mode="outlined"
+        style={styles.input}
+        error={!!errors.dateMapped}
+        outlineColor={COLORS.border}
+        activeOutlineColor={COLORS.primary}
+        placeholder="e.g. 02/28/2026"
+        keyboardType="numeric"
+      />
+      {errors.dateMapped && (
+        <HelperText type="error">{errors.dateMapped}</HelperText>
       )}
     </View>
   );

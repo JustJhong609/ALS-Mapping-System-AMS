@@ -30,9 +30,6 @@ export const validatePersonalInfo = (
 ): ValidationResult => {
   const errors: Record<string, string> = {};
 
-  if (!data.mappedBy.trim()) {
-    errors.mappedBy = 'Mapper name is required';
-  }
   if (!data.lastName.trim()) {
     errors.lastName = 'Last name is required';
   }
@@ -138,6 +135,12 @@ export const validateLogistics = (data: LearnerFormData): ValidationResult => {
   }
   if (!data.preferredSessionTime) {
     errors.preferredSessionTime = 'Preferred session time is required';
+  }
+  if (!data.mappedBy.trim()) {
+    errors.mappedBy = 'Mapper / facilitator name is required';
+  }
+  if (!data.dateMapped) {
+    errors.dateMapped = 'Date mapped is required';
   }
 
   return {
