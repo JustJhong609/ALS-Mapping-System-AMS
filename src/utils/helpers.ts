@@ -42,6 +42,13 @@ export const createEmptyFormData = (): LearnerFormData => ({
   currentlyStudying: '',
   lastGradeCompleted: '',
   reasonForNotAttending: '',
+  reasonForNotAttendingOther: '',
+  isBlp: '',
+  occupationType: '',
+  employmentStatus: '',
+  monthlyIncome: '',
+  interestedInALS: '',
+  contactNumber: '',
 
   // Logistics
   distanceKm: '',

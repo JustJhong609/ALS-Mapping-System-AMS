@@ -164,6 +164,13 @@ const LearnerListScreen: React.FC<Props> = ({
       {/* Header */}
       <View style={styles.header}>
         <View style={styles.headerRow}>
+          <IconButton
+            icon="arrow-left"
+            iconColor={COLORS.white}
+            size={24}
+            style={styles.backButton}
+            onPress={() => navigation.goBack()}
+          />
           <View style={styles.headerTextGroup}>
             <Text style={styles.headerTitle}>ALS Mapper</Text>
             <Text style={styles.headerSubtitle}>{DISTRICT}</Text>
@@ -253,6 +260,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  backButton: {
+    marginLeft: -8,
+    marginRight: 4,
   },
   headerTextGroup: {
     flex: 1,

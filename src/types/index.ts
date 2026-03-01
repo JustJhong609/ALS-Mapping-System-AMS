@@ -42,6 +42,13 @@ export interface Learner {
   currentlyStudying: string;
   lastGradeCompleted: string;
   reasonForNotAttending: string;
+  reasonForNotAttendingOther?: string;
+  isBlp: boolean;
+  occupationType: string;
+  employmentStatus: string;
+  monthlyIncome: string;
+  interestedInALS: string;
+  contactNumber: string;
 
   // Logistics
   distanceKm: number;
@@ -104,6 +111,13 @@ export interface LearnerFormData {
   currentlyStudying: string;
   lastGradeCompleted: string;
   reasonForNotAttending: string;
+  reasonForNotAttendingOther: string;
+  isBlp: string;
+  occupationType: string;
+  employmentStatus: string;
+  monthlyIncome: string;
+  interestedInALS: string;
+  contactNumber: string;
 
   // Logistics
   distanceKm: string;

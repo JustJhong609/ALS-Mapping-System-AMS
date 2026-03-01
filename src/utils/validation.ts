@@ -48,11 +48,14 @@ export const validatePersonalInfo = (
   if (!data.birthdate) {
     errors.birthdate = 'Birthdate is required';
   }
-  if (!data.motherTongue) {
-    errors.motherTongue = 'Mother tongue is required';
+  if (!data.occupationType) {
+    errors.occupationType = 'Occupation type is required';
   }
-  if (data.isIP === 'Yes' && !data.ipTribe.trim()) {
-    errors.ipTribe = 'Please specify the tribe / ethnic group';
+  if (data.occupationType !== 'None' && !data.employmentStatus) {
+    errors.employmentStatus = 'Employment status is required';
+  }
+  if (!data.monthlyIncome.trim()) {
+    errors.monthlyIncome = 'Monthly income is required';
   }
 
   return {
@@ -89,6 +92,9 @@ export const validateFamily = (data: LearnerFormData): ValidationResult => {
   if (!data.roleInFamily) {
     errors.roleInFamily = 'Role in the family is required';
   }
+  if (data.isIP === 'Yes' && !data.ipTribe.trim()) {
+    errors.ipTribe = 'Please specify the tribe / ethnic group';
+  }
 
   return {
     isValid: Object.keys(errors).length === 0,
@@ -102,14 +108,32 @@ export const validateFamily = (data: LearnerFormData): ValidationResult => {
 export const validateEducation = (data: LearnerFormData): ValidationResult => {
   const errors: Record<string, string> = {};
 
-  if (!data.currentlyStudying) {
-    errors.currentlyStudying = 'Please indicate if currently studying';
+  if (!data.isBlp) {
+    errors.isBlp = 'Please indicate if learner is for BLP';
   }
-  if (!data.lastGradeCompleted) {
-    errors.lastGradeCompleted = 'Last grade completed is required';
-  }
+
+  // Reason for Not Attending is always required
   if (!data.reasonForNotAttending) {
     errors.reasonForNotAttending = 'Reason for not attending is required';
+  }
+  if (data.reasonForNotAttending === 'Others (Specify)' && !data.reasonForNotAttendingOther?.trim()) {
+    errors.reasonForNotAttendingOther = 'Please specify the reason';
+  }
+
+  // Skip remaining education fields if BLP
+  if (data.isBlp !== 'Yes') {
+    if (!data.currentlyStudying) {
+      errors.currentlyStudying = 'Please indicate if currently studying';
+    }
+    if (!data.lastGradeCompleted) {
+      errors.lastGradeCompleted = 'Last grade completed is required';
+    }
+    if (!data.interestedInALS) {
+      errors.interestedInALS = 'Please indicate interest in ALS A&E Program';
+    }
+  }
+  if (!data.contactNumber.trim()) {
+    errors.contactNumber = 'Contact number is required';
   }
 
   return {

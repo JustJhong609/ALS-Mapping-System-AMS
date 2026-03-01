@@ -8,7 +8,7 @@ import {
   TouchableRipple,
 } from 'react-native-paper';
 import { LearnerFormData, ValidationErrors } from '../../types';
-import { SEX_OPTIONS, MOTHER_TONGUE_OPTIONS, CIVIL_STATUS_OPTIONS, YES_NO_OPTIONS, COLORS } from '../../utils/constants';
+import { SEX_OPTIONS, CIVIL_STATUS_OPTIONS, OCCUPATION_TYPE_OPTIONS, EMPLOYMENT_STATUS_OPTIONS, COLORS } from '../../utils/constants';
 import { calculateAge } from '../../utils/validation';
 import DropdownPicker from '../common/DropdownPicker';
 
@@ -167,83 +167,57 @@ const PersonalInfoSection: React.FC<Props> = ({ data, errors, onChange }) => {
         />
       )}
 
-      {/* Mother Tongue */}
-      <Text style={styles.label}>Mother Tongue *</Text>
+      {/* Nature of Work / Occupation */}
+      <Text style={styles.label}>Nature of Work / Occupation *</Text>
       <DropdownPicker
-        label="Mother Tongue"
-        selectedValue={data.motherTongue}
-        onValueChange={v => onChange('motherTongue', v)}
-        options={MOTHER_TONGUE_OPTIONS}
-        placeholder="-- Select Mother Tongue --"
-        error={!!errors.motherTongue}
-      />
-      {errors.motherTongue && (
-        <HelperText type="error">{errors.motherTongue}</HelperText>
-      )}
-
-      {/* IP / Indigenous Peoples (Yes/No) */}
-      <Text style={styles.label}>Belongs to Indigenous Peoples (IP)?</Text>
-      <RadioButton.Group
+        label="Occupation Type"
+        selectedValue={data.occupationType}
         onValueChange={v => {
-          onChange('isIP', v);
-          if (v === 'No') onChange('ipTribe', '');
+          onChange('occupationType', v);
+          if (v === 'None') onChange('employmentStatus', '');
         }}
-        value={data.isIP}>
-        <View style={styles.radioRow}>
-          {YES_NO_OPTIONS.map(option => (
-            <TouchableRipple
-              key={`ip-${option}`}
-              onPress={() => {
-                onChange('isIP', option);
-                if (option === 'No') onChange('ipTribe', '');
-              }}
-              style={styles.radioItem}>
-              <View style={styles.radioItemInner}>
-                <RadioButton value={option} color={COLORS.primary} />
-                <Text>{option}</Text>
-              </View>
-            </TouchableRipple>
-          ))}
-        </View>
-      </RadioButton.Group>
-
-      {/* Tribe name (shown only if IP = Yes) */}
-      {data.isIP === 'Yes' && (
-        <TextInput
-          label="Tribe / Ethnic Group *"
-          value={data.ipTribe}
-          onChangeText={v => onChange('ipTribe', v)}
-          mode="outlined"
-          style={styles.input}
-          error={!!errors.ipTribe}
-          outlineColor={COLORS.border}
-          activeOutlineColor={COLORS.primary}
-          placeholder="e.g. Talaandig, Higaonon, Manobo"
-        />
-      )}
-      {errors.ipTribe && (
-        <HelperText type="error">{errors.ipTribe}</HelperText>
+        options={OCCUPATION_TYPE_OPTIONS}
+        placeholder="-- Select Occupation Type --"
+        error={!!errors.occupationType}
+      />
+      {errors.occupationType && (
+        <HelperText type="error">{errors.occupationType}</HelperText>
       )}
 
-      {/* 4P's Member */}
-      <Text style={styles.label}>Member of 4P's (Pantawid Pamilya)?</Text>
-      <RadioButton.Group
-        onValueChange={v => onChange('is4PsMember', v)}
-        value={data.is4PsMember}>
-        <View style={styles.radioRow}>
-          {YES_NO_OPTIONS.map(option => (
-            <TouchableRipple
-              key={`4ps-${option}`}
-              onPress={() => onChange('is4PsMember', option)}
-              style={styles.radioItem}>
-              <View style={styles.radioItemInner}>
-                <RadioButton value={option} color={COLORS.primary} />
-                <Text>{option}</Text>
-              </View>
-            </TouchableRipple>
-          ))}
-        </View>
-      </RadioButton.Group>
+      {/* Employment Status — hidden when occupation is None */}
+      {data.occupationType !== 'None' && data.occupationType !== '' && (
+        <>
+          <Text style={styles.label}>Employment Status *</Text>
+          <DropdownPicker
+            label="Employment Status"
+            selectedValue={data.employmentStatus}
+            onValueChange={v => onChange('employmentStatus', v)}
+            options={EMPLOYMENT_STATUS_OPTIONS}
+            placeholder="-- Select Employment Status --"
+            error={!!errors.employmentStatus}
+          />
+          {errors.employmentStatus && (
+            <HelperText type="error">{errors.employmentStatus}</HelperText>
+          )}
+        </>
+      )}
+
+      {/* Monthly Income */}
+      <TextInput
+        label="Monthly Income *"
+        value={data.monthlyIncome}
+        onChangeText={v => onChange('monthlyIncome', v)}
+        mode="outlined"
+        style={styles.input}
+        keyboardType="numeric"
+        placeholder="e.g. 5000"
+        error={!!errors.monthlyIncome}
+        outlineColor={COLORS.border}
+        activeOutlineColor={COLORS.primary}
+      />
+      {errors.monthlyIncome && (
+        <HelperText type="error">{errors.monthlyIncome}</HelperText>
+      )}
 
       {/* Religion (optional) */}
       <TextInput
