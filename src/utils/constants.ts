@@ -62,6 +62,22 @@ export const MOTHER_TONGUE_OPTIONS: readonly string[] = [
   'Surigaonon',
 ];
 
+/** Nature of Work / Occupation type */
+export const OCCUPATION_TYPE_OPTIONS: readonly string[] = [
+  'Government',
+  'Private',
+  'Self-employed',
+  'None',
+];
+
+/** Employment status options */
+export const EMPLOYMENT_STATUS_OPTIONS: readonly string[] = [
+  'Regular',
+  'Contractual',
+  'Casual',
+  'JO',
+];
+
 /** Reason for not attending school */
 export const REASON_OPTIONS: readonly string[] = [
   'Schools are very far',
@@ -73,6 +89,7 @@ export const REASON_OPTIONS: readonly string[] = [
   'Employment / Looking for work',
   'Lack of personal interest',
   'Cannot cope with school work',
+  'Others (Specify)',
 ];
 
 /** Barangays in Manolo Fortich District I */

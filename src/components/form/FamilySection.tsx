@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { TextInput, Text, HelperText } from 'react-native-paper';
+import { TextInput, Text, HelperText, RadioButton, TouchableRipple } from 'react-native-paper';
 import { LearnerFormData, ValidationErrors } from '../../types';
-import { FAMILY_ROLE_OPTIONS, COLORS } from '../../utils/constants';
+import { FAMILY_ROLE_OPTIONS, YES_NO_OPTIONS, COLORS } from '../../utils/constants';
 import DropdownPicker from '../common/DropdownPicker';
 
 interface Props {
@@ -75,6 +75,68 @@ const FamilySection: React.FC<Props> = ({ data, errors, onChange }) => {
         outlineColor={COLORS.border}
         activeOutlineColor={COLORS.primary}
       />
+
+      {/* IP / Indigenous Peoples */}
+      <Text style={styles.label}>Belongs to Indigenous Peoples (IP)?</Text>
+      <RadioButton.Group
+        onValueChange={v => {
+          onChange('isIP', v);
+          if (v === 'No') onChange('ipTribe', '');
+        }}
+        value={data.isIP}>
+        <View style={styles.radioRow}>
+          {YES_NO_OPTIONS.map(option => (
+            <TouchableRipple
+              key={`ip-${option}`}
+              onPress={() => {
+                onChange('isIP', option);
+                if (option === 'No') onChange('ipTribe', '');
+              }}
+              style={styles.radioItem}>
+              <View style={styles.radioItemInner}>
+                <RadioButton value={option} color={COLORS.primary} />
+                <Text>{option}</Text>
+              </View>
+            </TouchableRipple>
+          ))}
+        </View>
+      </RadioButton.Group>
+      {data.isIP === 'Yes' && (
+        <TextInput
+          label="Tribe / Ethnic Group *"
+          value={data.ipTribe}
+          onChangeText={v => onChange('ipTribe', v)}
+          mode="outlined"
+          style={styles.input}
+          error={!!errors.ipTribe}
+          outlineColor={COLORS.border}
+          activeOutlineColor={COLORS.primary}
+          placeholder="e.g. Talaandig, Higaonon, Manobo"
+        />
+      )}
+      {errors.ipTribe && (
+        <HelperText type="error">{errors.ipTribe}</HelperText>
+      )}
+
+      {/* 4P's Member */}
+      <Text style={styles.label}>Member of 4P's (Pantawid Pamilya)?</Text>
+      <RadioButton.Group
+        onValueChange={v => onChange('is4PsMember', v)}
+        value={data.is4PsMember}>
+        <View style={styles.radioRow}>
+          {YES_NO_OPTIONS.map(option => (
+            <TouchableRipple
+              key={`4ps-${option}`}
+              onPress={() => onChange('is4PsMember', option)}
+              style={styles.radioItem}>
+              <View style={styles.radioItemInner}>
+                <RadioButton value={option} color={COLORS.primary} />
+                <Text>{option}</Text>
+              </View>
+            </TouchableRipple>
+          ))}
+        </View>
+      </RadioButton.Group>
     </View>
   );
 };
@@ -106,6 +168,23 @@ const styles = StyleSheet.create({
     color: COLORS.text,
     marginBottom: 6,
     marginTop: 12,
+  },
+  radioRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 4,
+  },
+  radioItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: 20,
+    paddingVertical: 6,
+    paddingHorizontal: 4,
+    borderRadius: 8,
+  },
+  radioItemInner: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
 
