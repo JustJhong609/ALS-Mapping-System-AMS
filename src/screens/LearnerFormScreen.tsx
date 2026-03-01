@@ -69,6 +69,7 @@ const LearnerFormScreen: React.FC<Props> = ({
         travelTime: editingLearner.travelTime,
         transportMode: editingLearner.transportMode,
         preferredSessionTime: editingLearner.preferredSessionTime,
+        dateMapped: editingLearner.dateMapped ? new Date(editingLearner.dateMapped) : null,
       };
     }
     return createEmptyFormData();
@@ -148,6 +149,7 @@ const LearnerFormScreen: React.FC<Props> = ({
       travelTime: formData.travelTime.trim(),
       transportMode: formData.transportMode,
       preferredSessionTime: formData.preferredSessionTime,
+      dateMapped: formData.dateMapped!,
     };
 
     if (isEditing) {

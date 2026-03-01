@@ -48,6 +48,7 @@ export interface Learner {
   travelTime: string;
   transportMode: string;
   preferredSessionTime: string;
+  dateMapped: Date;
 }
 
 /**
@@ -109,6 +110,7 @@ export interface LearnerFormData {
   travelTime: string;
   transportMode: string;
   preferredSessionTime: string;
+  dateMapped: Date | null;
 }
 
 /**
